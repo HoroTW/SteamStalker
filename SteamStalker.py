@@ -112,9 +112,13 @@ friends = get_steam_friends(STEAM_ID, STEAM_KEY)
 updateFriendsTime = datetime.now() + timedelta(minutes=FRIEND_UPDATE_INTERVAL_IN_MIN)
 
 while True:
-    if datetime.now() > updateFriendsTime:
-        updateFriendsTime = datetime.now() + timedelta(minutes=FRIEND_UPDATE_INTERVAL_IN_MIN)
-        friends = get_steam_friends(STEAM_ID, STEAM_KEY)
+    try:
+        if datetime.now() > updateFriendsTime:
+            updateFriendsTime = datetime.now() + timedelta(minutes=FRIEND_UPDATE_INTERVAL_IN_MIN)
+            friends = get_steam_friends(STEAM_ID, STEAM_KEY)
 
-    update(friends, STEAM_KEY)
-    time.sleep(UPDATE_INTERVAL_IN_SEC)
+        update(friends, STEAM_KEY)
+        time.sleep(UPDATE_INTERVAL_IN_SEC)
+    except Exception as e:
+        print(e)
+
