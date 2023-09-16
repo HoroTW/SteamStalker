@@ -23,8 +23,8 @@ TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 STEAM_KEY = os.getenv("STEAM_KEY")
 STEAM_ID = os.getenv("STEAM_ID")
 DBFILE = os.getenv("STORE", "steamFriendStateDB.json")
-FRIEND_UPDATE_INTERVAL_IN_MIN=os.getenv("NEW_FRIEND_UPDATE_INTERVAL_IN_MIN", 120)
-UPDATE_INTERVAL_IN_SEC=os.getenv("FRIEND_STATE_UPDATE_INTERVAL_IN_SEC", 60)
+FRIEND_UPDATE_INTERVAL_IN_MIN=int(os.getenv("NEW_FRIEND_UPDATE_INTERVAL_IN_MIN", 120))
+UPDATE_INTERVAL_IN_SEC=int(os.getenv("FRIEND_STATE_UPDATE_INTERVAL_IN_SEC", 60))
 
 
 async def get_chats_where_bot_is_member():
@@ -91,9 +91,9 @@ def update(friends, STEAM_KEY):
             print(message)
             asyncio.run(send_message(message))
 
-        # write db file
-        with open(DBFILE, "w") as f:
-            json.dump(db, f, indent=4)
+    # write db file
+    with open(DBFILE, "w") as f:
+        json.dump(db, f, indent=4)
 
     return response.json()["response"]["players"]
 
